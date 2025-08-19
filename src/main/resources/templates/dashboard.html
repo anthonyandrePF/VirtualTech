@@ -1,0 +1,47 @@
+<!doctype html>
+<html xmlns:th="http://www.thymeleaf.org" lang="es">
+<body>
+  <h2 class="mb-4">Dashboard</h2>
+
+  <div class="card shadow-sm mb-3">
+    <div class="card-body">
+      <div class="small text-muted">Ventas de hoy (S/)</div>
+      <div class="display-6" th:text="${#numbers.formatDecimal(salesToday,1,2)}">0.00</div>
+    </div>
+  </div>
+
+  <div class="row g-3">
+    <div class="col-lg-6">
+      <div class="card shadow-sm"><div class="card-body">
+        <h5 class="card-title">Ventas por categoría</h5>
+        <canvas id="chartCat" height="140"></canvas>
+      </div></div>
+    </div>
+    <div class="col-lg-6">
+      <div class="card shadow-sm"><div class="card-body">
+        <h5 class="card-title">Ventas por marca</h5>
+        <canvas id="chartBrand" height="140"></canvas>
+      </div></div>
+    </div>
+  </div>
+
+  <script th:inline="javascript">
+    const catLabels   = /*[[${byCatLabels}]]*/ [];
+    const catTotals   = /*[[${byCatTotals}]]*/ [];
+    const brandLabels = /*[[${byBrandLabels}]]*/ [];
+    const brandTotals = /*[[${byBrandTotals}]]*/ [];
+
+    new Chart(document.getElementById('chartCat'), {
+      type: 'bar',
+      data: { labels: catLabels, datasets: [{ label: 'S/', data: catTotals }] },
+      options: { responsive: true, maintainAspectRatio: false }
+    });
+
+    new Chart(document.getElementById('chartBrand'), {
+      type: 'doughnut',
+      data: { labels: brandLabels, datasets: [{ data: brandTotals }] },
+      options: { responsive: true, maintainAspectRatio: false }
+    });
+  </script>
+</body>
+</html>
