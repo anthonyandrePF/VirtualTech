@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="es" xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>VirtualTech - Inicio</title>
+  <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+</head>
+<body>
+  <!-- Fragmento de Navbar -->
+  <th:block th:replace="fragments/navbar :: navbar"></th:block>
+
+  <!-- Fragmento de Header -->
+  <th:block th:replace="fragments/header :: header"></th:block>
+
+  <!-- Contenido principal (puedes agregar productos aquí o un slider) -->
+  <div class="container mx-auto text-center py-10">
+    <h2 class="text-3xl font-semibold mb-6">Explora nuestros productos</h2>
+    <!-- Aquí puedes agregar un carrusel o productos destacados -->
+  </div>
+
+  <!-- Fragmento de Footer -->
+  <th:block th:replace="fragments/footer :: footer"></th:block>
+</body>
+</html>

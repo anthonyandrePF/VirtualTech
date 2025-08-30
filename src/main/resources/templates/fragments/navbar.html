@@ -1,0 +1,60 @@
+<nav th:fragment="navbar"
+     xmlns:th="http://www.thymeleaf.org"
+     xmlns:sec="http://www.thymeleaf.org/extras/spring-security"
+     class="bg-black text-white py-3">
+  <div class="container mx-auto flex justify-between items-center gap-4">
+
+    <!-- Logo -->
+    <a th:href="@{/}" class="text-green-500 font-bold text-2xl">VirtualTech</a>
+
+    <!-- Buscador (apunta al listado de productos) -->
+    <form th:action="@{/products}" method="get" class="relative flex-1 max-w-3xl">
+      <input type="text" name="q"
+             class="w-full px-4 py-2 rounded-full border border-gray-600 bg-transparent placeholder-gray-400"
+             placeholder="Buscar en VirtualTech…">
+      <button type="submit"
+              class="absolute right-2 top-1/2 -translate-y-1/2 grid place-items-center w-9 h-9 rounded-full border border-gray-500">
+        <!-- ícono lupa -->
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"
+             fill="none" stroke="currentColor" class="w-5 h-5">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                d="M21 21l-4.35-4.35M16.5 10a6.5 6.5 0 11-13 0 6.5 6.5 0 0113 0z"/>
+        </svg>
+      </button>
+    </form>
+
+    <!-- Menú derecho -->
+    <div class="flex items-center gap-4">
+
+      <!-- Bloque visible sólo para ADMIN -->
+      <div class="hidden md:flex items-center gap-3" sec:authorize="hasRole('ADMIN')">
+        <a th:href="@{/dashboard}" class="text-gray-300 hover:text-white">Dashboard</a>
+        <a th:href="@{/products}"  class="text-gray-300 hover:text-white">Productos</a>
+        <a th:href="@{/products/new}" class="text-gray-300 hover:text-white">Nuevo</a>
+      </div>
+
+      <!-- Carrito (contador opcional vía model/session: cartCount) -->
+      <a th:href="@{/cart}" class="text-gray-200 hover:text-white flex items-center">
+        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
+             stroke="currentColor" class="w-6 h-6">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                d="M3 3h18l-1.5 12H4.5L3 3zM9 21h0m6 0h0"/>
+        </svg>
+        <span class="ml-2 text-sm" th:text="${cartCount} ?: 0">0</span>
+      </a>
+
+      <!-- Auth -->
+      <span class="hidden sm:inline text-gray-300" sec:authorize="isAuthenticated()">
+        Hola, <b sec:authentication="name">usuario</b>
+      </span>
+
+      <a th:href="@{/login}" class="text-gray-200 hover:text-white"
+         sec:authorize="!isAuthenticated()">Inicia sesión</a>
+
+      <form sec:authorize="isAuthenticated()" th:action="@{/logout}" method="post">
+        <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}">
+        <button class="px-3 py-1 rounded border border-gray-500 hover:bg-gray-800">Salir</button>
+      </form>
+    </div>
+  </div>
+</nav>

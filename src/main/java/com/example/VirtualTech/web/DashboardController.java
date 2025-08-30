@@ -14,7 +14,7 @@ import java.time.*;
 public class DashboardController {
   private final OrderItemRepository repo;
 
-  @GetMapping({"/", "/dashboard"})
+  @GetMapping({ "/dashboard"})
   public String dashboard(Model model){
     // Inicio y fin del día local
     ZoneId zone = ZoneId.systemDefault(); // America/Lima en tu caso
